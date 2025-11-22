@@ -59,7 +59,7 @@ const {
 // SEO Configuration
 const siteUrl = 'https://senghong-portfolio.web.app';
 const title = 'Hang Senghong - Full Stack Developer';
-const description = 'Full Stack Developer specializing in Vue.js, Nuxt.js, .NET Core, and modern web technologies. Building scalable, high-performance applications with clean code and exceptional user experiences.';
+const description = 'Full Stack Developer specializing in Vue.js, Nuxt.js, NestJS, ExpresJS, .NET Core, SQL, NoSQL and modern web technologies. Building scalable, high-performance applications with clean code and exceptional user experiences.'
 
 useHead({
   title,
@@ -74,11 +74,15 @@ useHead({
     { property: 'og:description', content: description },
     { property: 'og:url', content: siteUrl },
     { property: 'og:site_name', content: 'Hang Senghong Portfolio' },
+    { property: 'og:image', content: `${siteUrl}/og-image.jpg` },
+    { property: 'og:image:type', content: 'image/jpeg' },
+    { property: 'og:image:alt', content: 'Hang Senghong - Full Stack Developer Profile Picture' },
 
     // Twitter Card
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: `${siteUrl}/og-image.jpg` },
     { name: 'twitter:creator', content: '@Hongprogrammer' },
   ],
   script: [

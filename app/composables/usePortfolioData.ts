@@ -122,6 +122,16 @@ export const usePortfolioData = () => {
   const education: Education[] = [
     {
       id: 1,
+      degree: 'Self-Taught & Online Learning',
+      institution: 'Online Platforms (YouTube, Google, Courses)',
+      location: 'Remote',
+      period: '2019 - Present',
+      description: 'Continuously learning through online tutorials, documentation, and courses. Improved practical skills by building real projects, exploring new technologies, and staying updated with industry trends.',
+      achievements: ['Built multiple personal and freelance projects', 'Consistently updated skills with modern frameworks'],
+      skills: ['JavaScript', 'TypeScript', 'Node.js', 'Vue/Nuxt', 'TailwindCSS', 'APIs', 'Cloud Deployment'],
+    },
+    {
+      id: 2,
       degree: 'Bachelor of Software development',
       institution: 'Norton University',
       location: 'Phnom Penh, Cambodia',
@@ -131,7 +141,7 @@ export const usePortfolioData = () => {
       skills: ['Data Structures', 'Algorithms', 'Database Design', 'Software Engineering', 'Web Development'],
     },
     {
-      id: 2,
+      id: 3,
       degree: 'High School',
       institution: 'Hunsen Sondek High School',
       location: 'Sondek, Bathey, Kompong Cham, Cambodia',
@@ -139,6 +149,7 @@ export const usePortfolioData = () => {
       description: 'Completed secondary education with a focus on mathematics and science. Developed early interest in programming and technology.',
       skills: ['Mathematics', 'Physics'],
     },
+    
   ];
 
   return {
