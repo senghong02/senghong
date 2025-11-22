@@ -10,15 +10,14 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  // nitro: {
+  //   preset: 'static',
+  //   firebase: {
+  //     gen: 2 // Use Firebase Functions Generation 2
+  //   }
+  // },
   nitro: {
-    prerender: {
-      autoSubfolderIndex: false,
-      routes: ['/']
-    },
-    preset: 'static',
-    firebase: {
-      gen: 2 // Use Firebase Functions Generation 2
-    }
+    preset: 'cloudflare'
   },
   ssr: true,
 
