@@ -24,8 +24,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Private keys (only available on server-side)
-    telegramBotToken: '',
-    telegramChatId: '',
+    telegramBotToken: import.meta.env.NUXT_TELEGRAM_BOT_TOKEN,
+    telegramChatId: import.meta.env.NUXT_TELEGRAM_CHAT_ID,
 
     public: {
       siteUrl: 'https://senghong-portfolio.web.app',
