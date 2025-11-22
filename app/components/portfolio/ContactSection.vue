@@ -32,6 +32,102 @@
           </a>
         </div>
 
+        <!-- Contact Form -->
+        <div class="max-w-2xl mx-auto my-16">
+          <form @submit.prevent="handleSubmit" class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Name Input -->
+              <div class="text-left">
+                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                  Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  v-model="formData.name"
+                  type="text"
+                  required
+                  class="w-full px-4 py-3 bg-gray-900/50 border border-cyan-500/30 rounded-lg focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 text-white placeholder-gray-500"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <!-- Email Input -->
+              <div class="text-left">
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                  Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  v-model="formData.email"
+                  type="email"
+                  required
+                  class="w-full px-4 py-3 bg-gray-900/50 border border-cyan-500/30 rounded-lg focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 text-white placeholder-gray-500"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+            </div>
+
+            <!-- Subject Input -->
+            <div class="text-left">
+              <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
+                Subject <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="subject"
+                v-model="formData.subject"
+                type="text"
+                required
+                class="w-full px-4 py-3 bg-gray-900/50 border border-cyan-500/30 rounded-lg focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 text-white placeholder-gray-500"
+                placeholder="What's this about?"
+              />
+            </div>
+
+            <!-- Message Input -->
+            <div class="text-left">
+              <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+                Message <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                v-model="formData.message"
+                required
+                rows="6"
+                class="w-full px-4 py-3 bg-gray-900/50 border border-cyan-500/30 rounded-lg focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 text-white placeholder-gray-500 resize-none"
+                placeholder="Tell me about your project or idea..."
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+              <button
+                type="submit"
+                :disabled="isSubmitting"
+                class="w-full px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+              >
+                <svg v-if="!isSubmitting" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                <svg v-else class="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+              </button>
+            </div>
+
+            <!-- Success Message -->
+            <div v-if="submitSuccess" class="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+              <p class="text-green-400 text-center">✓ Message sent successfully! I'll get back to you soon.</p>
+            </div>
+
+            <!-- Error Message -->
+            <div v-if="submitError" class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <p class="text-red-400 text-center">✗ {{ submitError }}</p>
+            </div>
+          </form>
+        </div>
+
         <!-- Social Links -->
         <div class="flex justify-center gap-4">
           <a v-for="social in socials" :key="social.name" :href="social.url"
@@ -45,6 +141,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from 'vue';
+
 interface Social {
   name: string;
   icon: string;
@@ -55,7 +153,61 @@ interface Props {
   socials: Social[];
 }
 
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 defineProps<Props>();
+
+const formData = reactive<FormData>({
+  name: '',
+  email: '',
+  subject: '',
+  message: ''
+});
+
+const isSubmitting = ref(false);
+const submitSuccess = ref(false);
+const submitError = ref('');
+
+const handleSubmit = async () => {
+  isSubmitting.value = true;
+  submitSuccess.value = false;
+  submitError.value = '';
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send message');
+    }
+
+    // Reset form on success
+    submitSuccess.value = true;
+    formData.name = '';
+    formData.email = '';
+    formData.subject = '';
+    formData.message = '';
+
+    setTimeout(() => {
+      submitSuccess.value = false;
+    }, 5000);
+  } catch (error) {
+    submitError.value = 'Failed to send message. Please try again or email directly.';
+    console.error('Form submission error:', error);
+  } finally {
+    isSubmitting.value = false;
+  }
+};
 </script>
 
 <style scoped>

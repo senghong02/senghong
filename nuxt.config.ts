@@ -23,6 +23,10 @@ export default defineNuxtConfig({
   ssr: true,
 
   runtimeConfig: {
+    // Private keys (only available on server-side)
+    telegramBotToken: '',
+    telegramChatId: '',
+
     public: {
       siteUrl: 'https://senghong-portfolio.web.app',
       // Alternative domain:
