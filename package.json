@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "build:prod": "npx nuxi build --preset=cloudflare_pages",
-    "deploy:prod":"npx wrangler pages deploy dist/"
+    "deploy:prod": "npx wrangler pages deploy dist/",
+    "firebase:build": "npm run build -- --preset=firebase",
+    "firebase:deploy": "firebase deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
