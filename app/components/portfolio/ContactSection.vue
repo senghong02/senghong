@@ -33,7 +33,7 @@
         </div>
 
         <!-- Contact Form -->
-        <div class="max-w-2xl mx-auto my-16">
+        <div v-if="!isFirebaseDomain" class="max-w-2xl mx-auto my-16">
           <form @submit.prevent="handleSubmit" class="space-y-6">
             <div class="grid md:grid-cols-2 gap-6">
               <!-- Name Input -->
@@ -143,6 +143,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 
+const isFirebaseDomain = computed(() => window.location.origin.includes('senghong-portfolio.web.app'));
 interface Social {
   name: string;
   icon: string;
