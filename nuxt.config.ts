@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
 
-  runtimeConfig: {
+  runtimeConfig: {  
     // Private keys (only available on server-side)
     telegramBotToken: import.meta.env.NUXT_TELEGRAM_BOT_TOKEN,
     telegramChatId: import.meta.env.NUXT_TELEGRAM_CHAT_ID,
