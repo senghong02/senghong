@@ -10,4 +10,9 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false
+    }
+  }
 })
